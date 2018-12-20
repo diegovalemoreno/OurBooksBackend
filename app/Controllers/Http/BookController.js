@@ -37,7 +37,7 @@ class BookController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request }) {
+  async store ({ request, response }) {
     const data = request.only([
       'user_id',
       'title',
@@ -47,14 +47,30 @@ class BookController {
       'point',
       'book_cover_url'
     ])
-    const book = await Book.create({ ...data })
+    try {
+      const book = await Book.create({ ...data })
+      const authors = request.input('authors')
 
-    const authors = request.input('authors')
+      await book.authors().createMany(authors)
 
-    await book.authors().createMany(authors)
-    return book
+      let objSucessMessage = {
+        data: book,
+        message: 'The book was created sucessufully.',
+        result: true
+
+      }
+      return objSucessMessage
+
+    } catch (error) {
+      let objErroMessage = {
+        data: null,
+        message: error.detail,
+        result: false
+      }
+      // console.log(error.detail)
+      return objErroMessage
+    }
   }
-
   /**
    * Display a single book.
    * GET books/:id
@@ -73,9 +89,20 @@ class BookController {
 
       await books.load('authors')
       await books.load('user')
-      return books
+      // return books
+      let objSucessMessage = {
+        data: books,
+        message: 'The books exists.',
+        result: true
+      }
+      return objSucessMessage
     } catch (error) {
-      return response.status(error.status).send(error.messages)
+      let objErroMessage = {
+        data: null,
+        message: error.message,
+        result: false
+      }
+      return objErroMessage
     }
   }
 
@@ -130,9 +157,21 @@ class BookController {
 
       await book.save()
 
-      return book
+      let objSucessMessage = {
+        data: book,
+        message: 'The book was update sucessfully.',
+        result: true
+      }
+      return objSucessMessage
+
     } catch (error) {
-      return response.status(error.status).send(error.messages)
+      let objErroMessage = {
+        data: null,
+        message: error.message,
+        result: false
+      }
+      return objErroMessage
+      // return response.status(error.status).send(error.messages)
     }
   }
 
@@ -153,7 +192,13 @@ class BookController {
       console.log(book)
       await book.delete()
     } catch (error) {
-      return response.status(error.status).send(error.messages)
+      // return response.status(error.status).send(error.messages)
+      let objErroMessage = {
+        data: null,
+        message: error.message,
+        result: false
+      }
+      return objErroMessage
     }
   }
 }
