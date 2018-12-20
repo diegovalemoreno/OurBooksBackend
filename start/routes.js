@@ -19,5 +19,5 @@ Route.group(() => {
   //   ]))
 }).middleware(['auth'])
 Route.get('/', () => {
-  return { greeting: 'Bem vindo seu otário!!!' }
+  return { greeting: 'Bem vindo André Artuzo!!!' }
 })
