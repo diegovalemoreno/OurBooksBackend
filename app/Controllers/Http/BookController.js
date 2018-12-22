@@ -118,12 +118,11 @@ class BookController {
   async userBooks ({
     params
   }) {
-    // const user = await User.findOrFail(params.id)
     const users = await User
       .query()
+      .where('email', params.email)
       .with('books')
       .with('books.authors')
-      .where('email', params.email)
       .fetch()
 
     return users
