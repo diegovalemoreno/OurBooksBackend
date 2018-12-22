@@ -123,7 +123,7 @@ class BookController {
       .query()
       .with('books')
       .with('books.authors')
-      .where('id', params.id)
+      .where('email', params.email)
       .fetch()
 
     return users
