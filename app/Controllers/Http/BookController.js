@@ -212,7 +212,7 @@ class BookController {
   }) {
     const book = await Book
       .query()
-      .where('ISBN', params.isbn)
+      .where('isbn', params.isbn)
       .fetch()
     console.log(book);
     console.log(params.title);
