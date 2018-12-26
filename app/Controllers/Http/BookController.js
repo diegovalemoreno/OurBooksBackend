@@ -200,6 +200,24 @@ class BookController {
       return objErroMessage
     }
   }
+
+  /**
+   * Display a single by name.
+   * GET books/:isbn
+   *
+   * @param {params} ctx.params
+   */
+  async finfBooksByISBN ({
+    params
+  }) {
+    const book = await Book
+      .query()
+      .where('ISBN', params.isbn)
+      .fetch()
+    console.log(book);
+    console.log(params.title);
+    return book
+  }
 }
 
 module.exports = BookController
