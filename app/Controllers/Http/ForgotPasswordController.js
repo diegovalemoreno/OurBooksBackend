@@ -10,7 +10,7 @@ class ForgotPasswordController {
       const email = request.input('email')
       const user = await User.findByOrFail('email', email)
 
-      user.token = crypto.randomBytes(3).toString('hex')
+      user.token = crypto.randomBytes(2).toString('hex')
       user.token_created_at = new Date()
 
       await user.save()
