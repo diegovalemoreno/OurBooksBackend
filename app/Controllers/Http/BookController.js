@@ -45,7 +45,8 @@ class BookController {
       'type',
       'pagecount',
       'point',
-      'book_cover_url'
+      'book_cover_url',
+      'isbn'
     ])
     try {
       const book = await Book.create({ ...data })
@@ -150,7 +151,8 @@ class BookController {
         'type',
         'pagecount',
         'point',
-        'book_cover_url'
+        'book_cover_url',
+        'isbn'
       ])
       book.merge(data)
 
